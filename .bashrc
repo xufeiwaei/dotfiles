@@ -72,11 +72,11 @@ EOT
 #   4.  SYSTEMS OPERATIONS & INFORMATION
 #   ---------------------------------------
 
-#   finderShowHidden:   Show hidden files in Finder
-#   finderHideHidden:   Hide hidden files in Finder
+#   fsh:   Show hidden files in Finder
+#   fhh:   Hide hidden files in Finder
 #   -------------------------------------------------------------------
-    alias finderShowHidden='defaults write com.apple.finder AppleShowAllFiles YES'
-    alias finderHideHidden='defaults write com.apple.finder AppleShowAllFiles NO'
+    alias fsh='defaults write com.apple.finder AppleShowAllFiles YES'
+    alias fhh='defaults write com.apple.finder AppleShowAllFiles NO'
 
 #   -------------------------
 #   5.  SET JAVA JDK VERSION
