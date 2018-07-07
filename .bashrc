@@ -10,7 +10,9 @@
 
 #   Set Paths
 #   ------------------------------------------------------------
-    export PATH=~/bin:${PATH}
+	export PATH=$JAVA_HOME/bin:$PATH
+        export JAVA_TOOL_OPTIONS=-Dfile.encoding=utf-8                  
+       
 
 #   Set Default Editor (change 'TextMate' to the editor of your choice)
 #   ------------------------------------------------------------
@@ -25,10 +27,21 @@
 #   (this is all commented out as I use Mac Terminal Profiles)
 #   from http://osxdaily.com/2012/02/21/add-color-to-the-terminal-in-mac-os-x/
 #   ------------------------------------------------------------
-   export LSCOLORS=ExFxCxDxBxegedabagaced
+   export CLICOLOR=1
+   export LSCOLORS=Exfxcxdxbxegedabagacad
+   # Set colors to match iTerm2 Terminal Colors
+   export TERM=xterm-256color
    
    alias ls='ls -G'
    alias vim=mvim
+   
+   # mysql path
+   PATH=$PATH:/usr/local/mysql/bin
+   
+   # bash-completion
+   if [ -f ~/.git-completion.bash ]; then
+     . ~/.git-completion.bash
+   fi
    
 #   -----------------------------
 #   2.  MAKE TERMINAL BETTER
@@ -36,13 +49,13 @@
 
    alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
    alias ..='cd ../'                           # Go back 1 directory level
-   alias ...='cd ../../'                       # Go back 2 directory levels
+   alias .2='cd ../../'                       # Go back 2 directory levels
    alias .3='cd ../../../'                     # Go back 3 directory levels
    alias .4='cd ../../../../'                  # Go back 4 directory levels
    alias .5='cd ../../../../../'               # Go back 5 directory levels
    alias .6='cd ../../../../../../'            # Go back 6 directory levels
 
-   alias of='open -a Finder ./'                # f:            Opens current directory in MacOS Finder
+   alias opf='open -a Finder ./'               # opf:          Opens current directory in MacOS Finder
    alias ~="cd ~"                              # ~:            Go Home
    alias c='clear'                             # c:            Clear terminal display
 
@@ -75,27 +88,18 @@ EOT
 #   fsh:   Show hidden files in Finder
 #   fhh:   Hide hidden files in Finder
 #   -------------------------------------------------------------------
-    alias fsh='defaults write com.apple.finder AppleShowAllFiles YES'
-    alias fhh='defaults write com.apple.finder AppleShowAllFiles NO'
+    alias shfy='defaults write com.apple.finder AppleShowAllFiles YES'
+    alias shfn='defaults write com.apple.finder AppleShowAllFiles NO'
 
 #   -------------------------
 #   5.  SET JAVA JDK VERSION
 #   -------------------------
 
-function setjdk() {
-  if [ $# -ne 0 ]; then
-   removeFromPath '/System/Library/Frameworks/JavaVM.framework/Home/bin'
-   if [ -n "${JAVA_HOME+x}" ]; then
-    removeFromPath $JAVA_HOME
-   fi
-   export JAVA_HOME=`/usr/libexec/java_home -v 1.6.0_65-b14-466.1`
-   export PATH=$JAVA_HOME/bin:$PATH
-  fi
- }
- function removeFromPath() {
-  export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
- }
-setjdk 1.6
+alias setJdk6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
+
+alias setJdk7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+
+alias setJdk8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
 #   ------------------
 #   6.  COLOR SETTING
@@ -228,5 +232,4 @@ function pwd_depth_limit_2 {
 
 # export all these for subshells
 export -f parse_git_branch parse_git_status parse_git_directory we_are_in_git_work_tree pwd_depth_limit_2
-export PS1='\[\033]0;\u@\h: \w\007\]\[\033[00;31m\]\h\[\033[00m\]: \[\033[00;36m\]< \[\033[00;32m\]$(pwd_depth_limit_2)\[\033[00;36m\]$(parse_git_status)\[\033[00;32m\]$(parse_git_branch) \[\033[00;36m\]> \[\033[00m\]' 
-export TERM="xterm-color"
+export PS1='\[\033]0;\u@\h: \w\007\]\[\033[00;31m\]\h\[\033[00m\]: \[\033[00;36m\]< \[\033[00;32m\]$(pwd_depth_limit_2)\[\033[01;36m\]$(parse_git_status)\[\033[00;35m\]$(parse_git_branch) \[\033[00;36m\]> \[\033[00m\]' 
